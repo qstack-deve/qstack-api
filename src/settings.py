@@ -36,7 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'main.CustomUser'
+AUTH_USER_MODEL = 'main.User'
 SESSION_COOKIE_AGE = 3600  # 1 hour (in seconds)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'api',
     'main',
+    'api',
     'rest_framework',
     'corsheaders',
 ]
@@ -182,6 +182,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
     "http://localhost:5173",
     "https://vercel.com",
     'https://quantum-stack-backend.onrender.com',
@@ -196,6 +197,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'quantum-stack-backend.onrender.com',
     'https://quantum-stack-backend.onrender.com',
+    'quantum-stack-frontend.vercel.app',
     
     'quantum-stack.vercel.app',
     'https://quantum-stack.vercel.app',    
@@ -204,6 +206,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://quantum-stack-backend.onrender.com',
     'https://quantum-stack-backend.onrender.com',
+    'https://quantum-stack-frontend.vercel.app',
     
     'https://quantum-stack.vercel.app',
     'https://quantum-stack.vercel.app'
