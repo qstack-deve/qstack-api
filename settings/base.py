@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'rest_framework.authtoken', # Required by dj-rest-auth
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     
     
@@ -128,19 +128,6 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-
-
-STORAGES = {
-    # Media: Goes to Cloudinary
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    
-    # Static: Stays local (or use WhiteNoise in production)
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 # 1. The modern way (Django 4.2+)
 STORAGES = {
     "default": {
@@ -151,8 +138,6 @@ STORAGES = {
     },
 }
 
-# 2. The "Legacy" fix (Add this line to stop the error)
-# This points the old setting to the new location
 STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 TEMPLATES = [

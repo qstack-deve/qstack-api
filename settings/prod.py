@@ -2,20 +2,17 @@ from .base import *
 import os
 import dj_database_url
 
-DEBUG = False
+# DEBUG = False
+DEBUG = True
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-ALLOWED_HOSTS = os.environ.get(
+DJANGO_ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-    "taxation-backend-uczl.onrender.com"
 ).split(",")
 
 
-
 DATABASES = {
-
     "default": dj_database_url.config(default=os.getenv("NEON_DB"))
 }
 
