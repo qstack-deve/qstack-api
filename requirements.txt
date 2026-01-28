@@ -20,7 +20,7 @@ dj-database-url
 psycopg
 python-decouple
 whitenoise
-gunicorn
+
 drf-nested-routers
 
 # storage
@@ -47,3 +47,4 @@ reportlab
 resend
 django-apscheduler
 apscheduler
+psycopg2-binary
