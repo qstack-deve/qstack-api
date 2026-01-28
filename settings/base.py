@@ -61,17 +61,6 @@ cloudinary.config(
 )
 
 
-STORAGES = {
-    # Media: Goes to Cloudinary
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    
-    # Static: Stays local (or use WhiteNoise in production)
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -141,20 +130,30 @@ AUTHENTICATION_BACKENDS = [
 
 
 
+STORAGES = {
+    # Media: Goes to Cloudinary
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    
+    # Static: Stays local (or use WhiteNoise in production)
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+# 1. The modern way (Django 4.2+)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None  
-# ACCOUNT_EMAIL_VERIFICATION = "none"
-# ACCOUNT_LOGIN_METHODS = {"email"}
-# ACCOUNT_UNIQUE_EMAIL = True
-
-# ACCOUNT_SIGNUP_FIELDS = {
-#     "email": {"required": True},
-#     "password1": {"required": True},
-#     "password2": {"required": True},
-# }
-
-
-
+# 2. The "Legacy" fix (Add this line to stop the error)
+# This points the old setting to the new location
+STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 TEMPLATES = [
     {
