@@ -7,7 +7,23 @@ from app.models import (
 from app.models.jobs import (
     Responsibility, Requirement, Benefit, SalaryRange
 )
-from app.models.portfolio import Portfolio
+from app.models.portfolio import (
+    Portfolio
+)
+from app.models.contact import (
+    Contact
+)
+
+
+# --------------CONTACT US HERE -------------------
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+
+# ------------------STAFF HERE -----------------
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,16 +40,7 @@ class SocialsSerializer(serializers.ModelSerializer):
         model = Social
         fields = ['platform', 'url']
 
-class StaffListSerializer(serializers.ModelSerializer):
-    role = RoleSerializer(read_only=True)
-    socials = SocialsSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Staff
-        fields = ('id', 'slug', 'full_name', 'role', 'avatar', 'bio', 'socials')
-
-
-class StaffDetailSerializer(serializers.ModelSerializer):
+class StaffSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True)
     role = RoleSerializer()
     full_name = serializers.ReadOnlyField()
@@ -43,31 +50,21 @@ class StaffDetailSerializer(serializers.ModelSerializer):
         model = Staff
         fields = '__all__'
 
+# -----------------portfolio here -----------------
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ('id', 'name')
 
 class PortfolioListSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, read_only=True)
+    category = serializers.StringRelatedField()
+
     class Meta:
         model = Portfolio
-        fields = ('id', 'title', 'description', 'status',  'image', 'tags', 'url')
+        fields = "__all__"
 
-class ResponsibilitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Responsibility
-        fields = ('description',)
-
-class RequirementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Requirement
-        fields = ('description',)
-
-class BenefitSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Benefit
-        fields = ('description',)
-
-class SalaryRangeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SalaryRange
-        fields = ('min_salary', 'max_salary')
 
 # --------JOBS HRERE--------
 class BenefitSerializer(serializers.ModelSerializer):

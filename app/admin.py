@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import (
-    User, Profile, Staff, Category, Skill, Role, Portfolio, Social, Tag
+    User, Profile, Staff, Category, Skill, Role, Portfolio, Social, Tag, Contact
 )
 from .models.jobs import Job, Responsibility, Requirement, Benefit, SalaryRange
 
 # --- Inlines ---
-
+class ContactInline(admin.TabularInline):
+    model = Contact
+    extra = 1
+    
 class SocialInline(admin.TabularInline):
     model = Social
     extra = 1
@@ -29,7 +32,20 @@ class SalaryRangeInline(admin.StackedInline):
     can_delete = False # Usually 1-to-1 jobs have exactly one salary range
 
 # --- Admin Classes ---
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email')
+    search_fields = ('name', 'email', 'message')
 
+    # def mark_as_read(self, request, queryset):
+    #     updated = queryset.update(is_read=True)
+    #     self.message_user(request, f"{updated} message(s) marked as read.")
+    # mark_as_read.short_description = "Mark selected messages as read"
+
+    # def mark_as_unread(self, request, queryset):
+    #     updated = queryset.update(is_read=False)
+    #     self.message_user(request, f"{updated} message(s) marked as unread.")
+    # mark_as_unread.short_description = "Mark selected messages as unread"
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     inlines = [SocialInline]
@@ -51,7 +67,6 @@ class PortfolioAdmin(admin.ModelAdmin):
     list_display = ('display_image', 'title', 'category', 'status', 'created_at')
     list_filter = ('status', 'category', 'tags')
     search_at = ('title', 'client')
-    prepopulated_fields = {"slug": ("title",)}
     filter_horizontal = ('tags',)
     list_editable = ('status',) # Change status directly from the list view
 

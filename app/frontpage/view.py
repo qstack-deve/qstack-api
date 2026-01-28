@@ -1,23 +1,20 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from app.models.staff import Staff
 from app.models.jobs import Job
 from app.models.portfolio import Portfolio
+from app.models.contact import Contact
 from .serializers import (
-    StaffListSerializer,
-    StaffDetailSerializer,
+    StaffSerializer,
     JobSerializer,
     PortfolioListSerializer,
+    ContactSerializer
 )
 
 
 class StaffViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Staff.objects.all()
     lookup_field = 'slug'
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return StaffListSerializer
-        return StaffDetailSerializer
+    serializer_class = StaffSerializer
 
 
 class JobViewSet(viewsets.ReadOnlyModelViewSet):
@@ -28,3 +25,7 @@ class JobViewSet(viewsets.ReadOnlyModelViewSet):
 class PortfolioViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioListSerializer
+
+class ContactCreateView(generics.CreateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer

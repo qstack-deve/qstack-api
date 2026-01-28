@@ -6,6 +6,9 @@ from .staff import (
 )
 from .portfolio import Portfolio, Category, Tag
 from .jobs import Job
+from .contact import (
+    Contact
+)
 
 __all__ = [
     'User',
@@ -18,4 +21,5 @@ __all__ = [
     'Tag',
     'Job',
     'Social',
+    'Contact',
 ]

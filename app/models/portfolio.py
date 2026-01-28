@@ -24,9 +24,6 @@ class Portfolio(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
-    # Added slug for SEO-friendly URLs
-    slug = models.SlugField(unique=True, blank=True, null=True) 
-    
     description = models.TextField(help_text="Short summary for cards")
     long_description = models.TextField(blank=True, help_text="Detailed case study")
     
@@ -41,7 +38,7 @@ class Portfolio(models.Model):
         related_name="projects" # Allows category.projects.all()
     )
     tags = models.ManyToManyField(Tag, blank=True, related_name="projects")
-    
+    is_pinned = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='development')
     client = models.CharField(max_length=100, blank=True)
     url = models.URLField(max_length=255, blank=True, null=True)
