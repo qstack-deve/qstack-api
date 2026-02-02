@@ -15,9 +15,10 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class RoleSerializer(serializers.ModelSerializer):
+    assigned = serializers.IntegerField(source='staff_count', read_only=True)
     class Meta:
         model = Role
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'level', 'assigned')
 
 class SocialsSerializer(serializers.ModelSerializer):
     class Meta:

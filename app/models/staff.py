@@ -37,7 +37,7 @@ class Staff(models.Model):
     bio = models.TextField(blank=True)
     
     # Relationships
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, related_name="staff")
     skills = models.ManyToManyField(Skill, blank=True)
     active_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='inactive')
     slug = models.SlugField(unique=True, blank=True, null=True)

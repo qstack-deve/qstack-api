@@ -14,8 +14,12 @@ from .serializers import (
 class StaffViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     serializer_class = StaffSerializer
+
     def get_queryset(self):
-        return Staff.objects.filter(active_status='active', role__isnull=False)
+        return Staff.objects.filter(
+            active_status='active', 
+            role__isnull=False
+        ).exclude(role__name='admin')
 
 
 class JobViewSet(viewsets.ReadOnlyModelViewSet):
