@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import (
-    User, Profile, Staff, Category, Skill, Role, Portfolio, Social, Tag, Contact
+    User, Staff, Category, Skill, Role, Portfolio, Social, Tag, Contact, Notification
 )
 from .models.jobs import Job, Responsibility, Requirement, Benefit, SalaryRange
-
 # --- Inlines ---
 class ContactInline(admin.TabularInline):
     model = Contact
@@ -37,23 +36,13 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'email')
     search_fields = ('name', 'email', 'message')
 
-    # def mark_as_read(self, request, queryset):
-    #     updated = queryset.update(is_read=True)
-    #     self.message_user(request, f"{updated} message(s) marked as read.")
-    # mark_as_read.short_description = "Mark selected messages as read"
-
-    # def mark_as_unread(self, request, queryset):
-    #     updated = queryset.update(is_read=False)
-    #     self.message_user(request, f"{updated} message(s) marked as unread.")
-    # mark_as_unread.short_description = "Mark selected messages as unread"
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     inlines = [SocialInline]
-    list_display = ('display_avatar', 'first_name', 'last_name', 'role', 'email')
-    list_display_links = ('display_avatar', 'first_name', 'last_name')
-    list_filter = ('role', 'skills')
-    search_fields = ('first_name', 'last_name', 'email')
-    prepopulated_fields = {"slug": ("first_name", "last_name")} # Automates slug entry
+    list_display = ('display_avatar', 'user', 'user__user_role')
+    list_display_links = ('display_avatar', 'user')
+    list_filter = ('user__user_role', 'skills')
+    search_fields = ('user__email', 'user__first_name', 'user__last_name')
     filter_horizontal = ('skills',) # Better UI for ManyToMany fields
 
     def display_avatar(self, obj):
@@ -91,4 +80,10 @@ class LookupAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 admin.site.register(User)
-admin.site.register(Profile)
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('recipient', 'title', 'read', 'notification_type', 'created_at')
+    list_filter = ('read', 'notification_type', 'created_at')
+    search_fields = ('recipient__email', 'title', 'message')

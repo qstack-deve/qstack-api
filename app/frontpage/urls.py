@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .view import StaffViewSet, JobViewSet, PortfolioViewSet, ContactCreateView
 
 router = DefaultRouter()
-router.register(r'staff', StaffViewSet)
+router.register(r'staff', StaffViewSet, basename='staff')
 router.register(r'jobs', JobViewSet)
 router.register(r'portfolio', PortfolioViewSet)
 

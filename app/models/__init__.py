@@ -1,5 +1,4 @@
 from .users import User
-from .profiles import Profile
 from .staff import (
     Staff, Skill, Role, 
     Social
@@ -9,17 +8,6 @@ from .jobs import Job
 from .contact import (
     Contact
 )
-
-__all__ = [
-    'User',
-    'Profile',
-    'Staff',
-    'Skill',
-    'Role',
-    'Portfolio',
-    'Category',
-    'Tag',
-    'Job',
-    'Social',
-    'Contact',
-]
+from .notififcations import (
+    Notification
+)

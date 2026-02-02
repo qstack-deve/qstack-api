@@ -14,14 +14,12 @@ from app.models.contact import (
     Contact
 )
 
-
 # --------------CONTACT US HERE -------------------
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = '__all__'
-
 
 # ------------------STAFF HERE -----------------
 
@@ -43,12 +41,13 @@ class SocialsSerializer(serializers.ModelSerializer):
 class StaffSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True)
     role = RoleSerializer()
-    full_name = serializers.ReadOnlyField()
     socials = SocialsSerializer(many=True, read_only=True)
-
+    full_name = serializers.ReadOnlyField()
+    
     class Meta:
         model = Staff
         fields = '__all__'
+
 
 # -----------------portfolio here -----------------
 
@@ -96,5 +95,4 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = '__all__'
-
 

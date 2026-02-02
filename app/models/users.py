@@ -30,9 +30,10 @@ class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     username = None
     email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
 
-    # Distinguish between regular users and agents via flags or groups
-    role = models.CharField(max_length=100, blank=True, choices=ROLE_CHOICES, default="staff")
+    user_role = models.CharField(max_length=100, blank=True, choices=ROLE_CHOICES, default="staff")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -41,4 +42,4 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.email} ({self.role})"
+        return f"{self.email} ({self.user_role})"

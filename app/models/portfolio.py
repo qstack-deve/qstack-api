@@ -18,7 +18,7 @@ class Category(models.Model):
 class Portfolio(models.Model):
     STATUS_CHOICES = [
         ("live", "Live"),
-        ("development", "In Development"), # Tweaked the grammar slightly
+        ("development", "In Development"),
         ("managing", "Managing")
     ]
     
@@ -47,7 +47,7 @@ class Portfolio(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at'] # Shows newest projects first by default
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title

@@ -120,8 +120,8 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE': None,
     'JWT_AUTH_REFRESH_COOKIE': None,  # <--- Must be explicitly None
     'JWT_AUTH_HTTPONLY': False,       # Optional, but good to be explicit
-    "REGISTER_SERIALIZER": "app.auth.serializers.auth_serializers.CustomRegisterSerializer",
-    'LOGIN_SERIALIZER': 'app.auth.serializers.LoginSerializer',
+    "REGISTER_SERIALIZER": "app.staff.auth.serializers.RegisterSerializer",
+    'LOGIN_SERIALIZER': 'app.staff.auth.serializers.LoginSerializer',
 }
 
 AUTHENTICATION_BACKENDS = [
