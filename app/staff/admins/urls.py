@@ -4,6 +4,8 @@ from .view import (
     MemberViewSet,
     JobViewSet, 
     PortfolioViewSet,
+    CategoryViewSet,
+    TagViewSet,
 )
 
 from ..views import (
@@ -15,7 +17,9 @@ from ..views import (
 router = DefaultRouter()
 router.register(r'members', MemberViewSet)
 router.register(r'jobs', JobViewSet)
-router.register(r'portfolio', PortfolioViewSet)
+router.register(r'portfolios', PortfolioViewSet)
+router.register(r'categories', CategoryViewSet)
+router.register(r'tags', TagViewSet)
 
 # tools
 router.register(r'roles', RoleViewSet)

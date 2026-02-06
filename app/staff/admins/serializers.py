@@ -8,7 +8,9 @@ from app.models.jobs import (
     Responsibility, Requirement, Benefit, SalaryRange
 )
 from app.models.portfolio import (
-    Portfolio
+    Portfolio,
+    Category,
+    Tag
 )
 from app.models.contact import (
     Contact
@@ -17,7 +19,13 @@ from ..serializers import (
     SkillSerializer,
     RoleSerializer,
     SocialsSerializer,
-    UserSerializer
+    UserSerializer,
+    TagSerializer,
+    CategorySerializer,
+    BenefitSerializer,
+    ResponsibilitySerializer,
+    RequirementSerializer,
+    SalaryRangeSerializer,
 )
 
 # ------------------STAFF HERE -----------------
@@ -67,46 +75,25 @@ class MemberSerializer(serializers.ModelSerializer):
         return instance
 
 # -----------------portfolio here -----------------
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = ('id', 'name')
 
-class PortfolioListSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, read_only=True)
-    category = serializers.StringRelatedField()
+class PortfolioSerializer(serializers.ModelSerializer):
+    tags = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Tag.objects.all(), required=False
+    )
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), required=False, allow_null=True
+    )
 
     class Meta:
         model = Portfolio
         fields = "__all__"
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['tags'] = TagSerializer(instance.tags.all(), many=True).data
+        representation['category'] = CategorySerializer(instance.category).data if instance.category else None
+        return representation
 
-# from ..serializers import (
-#     BenefitSerializer,
-#     ResponsibilitySerializer,
-#     RequirementSerializer,
-#     SalaryRangeSerializer,
-# )
-# --------JOBS HRERE--------
-class BenefitSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Benefit
-        fields = ('description',)
-
-class ResponsibilitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Responsibility
-        fields = ['description']
-
-class RequirementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Requirement
-        fields = ['description']
-
-class SalaryRangeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SalaryRange
-        fields = ('min_salary', 'max_salary')
 
 class JobSerializer(serializers.ModelSerializer):
     responsibilities = ResponsibilitySerializer(many=True, read_only=True)
@@ -117,5 +104,3 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = '__all__'
-
-

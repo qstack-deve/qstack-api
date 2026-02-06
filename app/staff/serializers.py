@@ -1,14 +1,22 @@
 from rest_framework import serializers
-from app.models.staff import Staff, Social, Role, Skill
+from app.models import (
+    Benefit, 
+    Requirement, 
+    Responsibility, 
+    SalaryRange
+)
 from app.models.users import User
-
-from rest_framework import serializers
+from app.models.portfolio import (
+    Tag,
+    Category,
+    Portfolio
+)
 from app.models.staff import Skill, Staff
 from app.models import (
     Job, Role, 
     Social
 )
-
+# ------- COMMON SERIALIZERS ---------
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
@@ -24,6 +32,38 @@ class SocialsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Social
         fields = ['platform', 'url']
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name')
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'name')
+
+class BenefitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Benefit
+        fields = ('description',)
+
+class ResponsibilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Responsibility
+        fields = ['description']
+
+class RequirementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Requirement
+        fields = ['description']
+
+class SalaryRangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SalaryRange
+        fields = ('min_salary', 'max_salary')
+
+    
 
 class StaffProfileSerializer(serializers.ModelSerializer):
     # Writable fields

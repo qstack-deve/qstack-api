@@ -3,15 +3,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from app.models.staff import Staff
 from app.models.jobs import Job
-from app.models.portfolio import Portfolio
+from app.models.portfolio import Portfolio, Category, Tag
 from app.models.contact import Contact
 from rest_framework.decorators import action
 from .serializers import (
     MemberSerializer,
     JobSerializer,
-    PortfolioListSerializer,
+    PortfolioSerializer,
+    CategorySerializer,
+    TagSerializer,
 )
 
 class MemberViewSet(viewsets.ModelViewSet):
@@ -47,4 +50,16 @@ class JobViewSet(viewsets.ModelViewSet):
 
 class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
-    serializer_class = PortfolioListSerializer
+    serializer_class = PortfolioSerializer
+    permission_classes = [IsAdminUser]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [IsAdminUser]

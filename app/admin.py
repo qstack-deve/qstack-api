@@ -53,16 +53,12 @@ class StaffAdmin(admin.ModelAdmin):
 
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('display_image', 'title', 'category', 'status', 'created_at')
+    list_display = ('title', 'category', 'status', 'created_at')
     list_filter = ('status', 'category', 'tags')
     search_at = ('title', 'client')
     filter_horizontal = ('tags',)
     list_editable = ('status',) # Change status directly from the list view
 
-    def display_image(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="width: 50px; height: auto; border-radius: 4px;" />', obj.image.url)
-        return "—"
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
